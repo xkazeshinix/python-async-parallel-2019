@@ -22,6 +22,7 @@ class Car:
         self.mileage -= param
         self.mileage = max(self.mileage, 0)  # by nie było ujemnego stanu licznika
 
+
 class ElectricCar(Car):
     def __init__(self, battery_capacity: int, producer='Generic', model='Standard', year=2000, mileage=100000):
         super().__init__(producer, model, year, mileage)
@@ -47,6 +48,14 @@ print(electra1)
 
 # zapisywanie auta jako .json do pliku
 import json
+
 with open('data.json', 'w') as f:
     json.dump(electra1.__dict__, f)
 
+# todo: wczytanie auta z json-a
+
+with open('data.json', 'r') as f:
+    dict = json.load(f)
+    print(dict)
+    kopia = ElectricCar(**dict)
+    print(kopia)
