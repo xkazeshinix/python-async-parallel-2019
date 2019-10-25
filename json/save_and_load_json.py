@@ -2,6 +2,12 @@ from typing import List
 
 """ Przykład serializacji i deserializacji danych, do/z json, zapisanego do pliku, zawierającego typ listy"""
 
+"""
+    Można ew. sprawdzić również (dla bardziej skomplikowanych obiektów):
+    - https://json-tricks.readthedocs.io/en/latest/
+    - http://jsonpickle.github.io/
+"""
+
 class U:
     def __init__(self, id, ii: List):
         self.id = id
