@@ -53,12 +53,17 @@ print(electra1.__dict__)
 # zapisywanie auta jako .json do pliku
 import json
 
-with open('data1.json', 'w') as file:
-    json.dump(electra1.__dict__, file)
+# with open('data1.json', 'w') as file:
+#     json.dump(electra1.__dict__, file)
+#
+# # odczytywanie z pliku
+# with open('data1.json', 'r') as file_:
+#     dict = json.load(file_)
+#     print(dict)
+#     kopia = ElectricCar(**dict)
+#     print(kopia)
 
-# odczytywanie z pliku
-with open('data1.json', 'r') as file_:
-    dict = json.load(file_)
-    print(dict)
-    kopia = ElectricCar(**dict)
-    print(kopia)
+cars = [electra1, blacar]
+# todo: znaleźć 'prostą' serializację, by listę wczytać 1-linerem
+# with open('cars.json', 'w') as file:
+#     json.dump(, file)
