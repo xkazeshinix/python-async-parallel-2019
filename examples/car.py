@@ -43,19 +43,22 @@ class ElectricCar(Car):
 # print(smart)  # 90000
 
 # tworzenie auta elektrycznego
-electra1 = ElectricCar(1000)
+blacar = Car('KIA')
+electra1 = ElectricCar(1000, 'Volvo')
 print(electra1)
+# print(blacar)
+print(electra1.__dict__)
+
 
 # zapisywanie auta jako .json do pliku
 import json
 
-with open('data.json', 'w') as f:
-    json.dump(electra1.__dict__, f)
+with open('data1.json', 'w') as file:
+    json.dump(electra1.__dict__, file)
 
-# todo: wczytanie auta z json-a
-
-with open('data.json', 'r') as f:
-    dict = json.load(f)
+# odczytywanie z pliku
+with open('data1.json', 'r') as file_:
+    dict = json.load(file_)
     print(dict)
     kopia = ElectricCar(**dict)
     print(kopia)
