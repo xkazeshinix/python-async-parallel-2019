@@ -26,4 +26,5 @@ with open('data.json', 'w') as f:
 with open('data.json', 'r') as f:
     loaded = json.load(f)
     uu = U(**loaded)
+
 print(uu.lista)
