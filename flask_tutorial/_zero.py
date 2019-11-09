@@ -1,3 +1,5 @@
+from typing import Dict
+
 from flask import Flask, jsonify, request
 
 app = Flask(__name__)
@@ -6,11 +8,10 @@ app = Flask(__name__)
 # https://www.tutorialspoint.com/flask/flask_http_methods.htm
 
 
-
-
 @app.route('/status')
 def get_json_data():
     return jsonify({'comment': 'App działa OK'})
+
 
 # dostępna pod: http://localhost:5001/compute?a=10&b=0
 @app.route('/compute')
@@ -21,6 +22,7 @@ def compute():
         # teraz zwracamy komunikat o błędzie, oraz http error-code 400 (BAD_REQUEST)
         return jsonify({'comment': 'b==0, cannot divide'}), 400
     return jsonify({'sum': a + b, 'difference': a - b, 'division': a / b})
+
 
 # dostępna pod: http://localhost:5001/welcome/roadrunner/suffix/nice%20to%20meet%20you
 @app.route('/welcome/<username>/suffix/<message>')
@@ -33,6 +35,10 @@ class Auth:
         self.user = user
         self.pass_ = pass_
 
+
+users: Dict[str, Auth] = {}
+
+
 # dostępna per Postman (trzeba zrobić zapytanie POST):
 # localhost:5001/user/create
 # w sekcji "body" trzba dać "raw -> JSON", i w polu JSON dodać:
@@ -44,7 +50,11 @@ class Auth:
 def create_user():
     data = request.json
     k = Auth(**data)
+    if users.keys().__contains__(k.user):
+        return jsonify({'comment':'This user name already exists!'}), 400
+    users[k.user] = k
     return jsonify(k.__dict__)
+
 
 # todo: zadanie -> zbierać userów w jakieś strukturze (np. liście 'users', albo Dict lub Set),
 #   i zwrócić błąd jeśli tworzymy usera, którego pole "user" już zostało "zajęte"
