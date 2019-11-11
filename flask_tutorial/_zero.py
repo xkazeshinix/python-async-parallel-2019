@@ -1,16 +1,22 @@
+import json
 from typing import Dict
 
 from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
-
 # https://www.tutorialspoint.com/flask/flask_http_methods.htm
+
+# ładowanie konfiguracji aplikacji (opcjonalne, ale to dobry pomysł);
+# po zbudowaniu aplikacji (poniżej) file "config.json" powinien się znajdować w folderze aplikacji
+with open('config.json', 'r') as f:
+    loaded = json.load(f)
+    magic = loaded['magic']
 
 
 @app.route('/status')
 def get_json_data():
-    return jsonify({'comment': 'App działa OK'})
+    return jsonify({'comment': f'App działa OK; magic:{magic}'})
 
 
 # dostępna pod: http://localhost:5001/compute?a=10&b=0
@@ -36,6 +42,10 @@ class Auth:
         self.pass_ = pass_
 
 
+# zadanie -> zbierać userów w jakieś strukturze (np. liście 'users', albo Dict lub Set),
+#   i zwrócić błąd jeśli tworzymy usera, którego pole "user" już zostało "zajęte"
+# rozwiązanie:
+
 users: Dict[str, Auth] = {}
 
 
@@ -51,13 +61,12 @@ def create_user():
     data = request.json
     k = Auth(**data)
     if users.keys().__contains__(k.user):
-        return jsonify({'comment':'This user name already exists!'}), 400
+        return jsonify({'comment': 'This user name already exists!'}), 400
     users[k.user] = k
     return jsonify(k.__dict__)
 
 
-# todo: zadanie -> zbierać userów w jakieś strukturze (np. liście 'users', albo Dict lub Set),
-#   i zwrócić błąd jeśli tworzymy usera, którego pole "user" już zostało "zajęte"
-
-
 app.run(host='localhost', port=5001, debug=None, load_dotenv=False)  # can skip all args
+
+# możliwa kompilacja do pojedynczego pliku wykonywalnego:
+# `pyinstaller _zero.py -n my_flask_app --onefile
