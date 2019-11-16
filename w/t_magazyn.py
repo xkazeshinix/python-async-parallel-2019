@@ -1,6 +1,5 @@
 import threading
 import time
-from typing import Dict
 
 d = threading.local()
 
@@ -41,6 +40,7 @@ class WorkerThread(threading.Thread):
 thread1 = WorkerThread(magazyn, 'chleb')
 thread2 = WorkerThread(magazyn, 'mleko')
 thread3 = WorkerThread(magazyn, 'bitcoin')
+
 thread1.start()
 thread1.join()
 thread2.start()

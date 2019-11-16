@@ -1,5 +1,13 @@
 import json
+import time
 from typing import Dict
+import threading
+
+"""
+  Note: każdy request uruchamia osobny wątek. 
+  Przegląd: `top -H -p <process_id>`
+"""
+
 
 from flask import Flask, jsonify, request
 
@@ -24,6 +32,7 @@ def get_json_data():
 def compute():
     a = int(request.args.get('a'))
     b = int(request.args.get('b'))
+    print(f'request a={a}, thread:{threading.current_thread().name}')
     if b == 0:
         # teraz zwracamy komunikat o błędzie, oraz http error-code 400 (BAD_REQUEST)
         return jsonify({'comment': 'b==0, cannot divide'}), 400
