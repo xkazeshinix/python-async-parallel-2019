@@ -19,14 +19,20 @@ print(f'główny wątek: {threading.current_thread().name}')
 # start
 start = time.time()
 
-t1 = MyThread('pierwszy')
-t2 = MyThread('drugi')
-
 # ćwiczenie: uruchomić trzykrotnie MyThread, ale tak, by całość zakończyła operację w czasie < 4s
 #    (zakończyła, tzn. ostatnia linia "koniec" została wypisana do konsoli )
-t1.start()
-t2.start()
-t1.join()
+
+launched_threads = []
+
+for i in range(10):
+    t = MyThread(f'job{i}')
+    t.start()
+    launched_threads.append(t)
+
+print(f'odpalone wątki: {launched_threads}')
+
+for th in launched_threads:
+    th.join()
 
 end = time.time()
 duration = end-start

@@ -33,6 +33,7 @@ def compute():
     a = int(request.args.get('a'))
     b = int(request.args.get('b'))
     print(f'request a={a}, thread:{threading.current_thread().name}')
+    time.sleep(10.0)
     if b == 0:
         # teraz zwracamy komunikat o błędzie, oraz http error-code 400 (BAD_REQUEST)
         return jsonify({'comment': 'b==0, cannot divide'}), 400
