@@ -4,12 +4,13 @@ from typing import Dict
 import threading
 from flask import Flask, jsonify, request
 
-from threads.bank import Bank
+from bank import Bank
 
 app = Flask(__name__)
 bank = Bank()
 
 
+@app.route('/')
 @app.route('/status')
 def get_json_data():
     return jsonify({'comment': f'Bank działa OK'})
@@ -19,6 +20,7 @@ def get_json_data():
 def get_funds():
     return jsonify({'funds': bank.funds})
 
+
 @app.route('/funds/draw')
 def draw_funds():
     amount = int(request.args.get('amount'))
@@ -26,7 +28,5 @@ def draw_funds():
     return jsonify({'OK': operation_OK, 'comment:': ''})
 
 
-
-
-
-app.run(host='localhost', port=5001, debug=None, load_dotenv=False)  # can skip all args
+# app.run(host='localhost', port=5001, debug=None, load_dotenv=False)  # can skip all args
+app.run(host='10.10.0.21', port=5001, debug=None, load_dotenv=False)  # can skip all args
