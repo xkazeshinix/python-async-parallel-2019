@@ -1,10 +1,7 @@
-import json
-import time
-from typing import Dict
-import threading
 from flask import Flask, jsonify, request
 
 from bank import Bank
+from config import magic, server_port, server_host
 
 app = Flask(__name__)
 bank = Bank()
@@ -27,6 +24,5 @@ def draw_funds():
     operation_OK = bank.draw_funds(amount)
     return jsonify({'OK': operation_OK, 'comment:': ''})
 
-
-# app.run(host='localhost', port=5001, debug=None, load_dotenv=False)  # can skip all args
-app.run(host='10.10.0.21', port=5001, debug=None, load_dotenv=False)  # can skip all args
+print(f'magic:{magic}')
+app.run(host=server_host, port=server_port, debug=None, load_dotenv=False)  # can skip all args
