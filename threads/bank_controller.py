@@ -2,8 +2,11 @@ from flask import Flask, jsonify, request
 
 from bank import Bank
 from config import magic, server_port, server_host
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
+
 bank = Bank()
 
 
@@ -23,6 +26,14 @@ def draw_funds():
     amount = int(request.args.get('amount'))
     operation_OK = bank.draw_funds(amount)
     return jsonify({'OK': operation_OK, 'comment:': ''})
+
+
+@app.route('/funds/add')
+def add_funds():
+    amount = int(request.args.get('amount'))
+    operation_OK = bank.add_funds(amount)
+    return jsonify({'OK': operation_OK, 'comment:': ''})
+
 
 print(f'magic:{magic}')
 app.run(host=server_host, port=server_port, debug=None, load_dotenv=False)  # can skip all args

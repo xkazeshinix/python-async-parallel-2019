@@ -13,9 +13,10 @@ class Bank:
         self.funds = 15
         self.lock = threading.Lock()    #kłódka
 
-    def add_funds(self, value: int):
+    def add_funds(self, value: int) -> bool:
         self.funds += value
         time.sleep(0.5)
+        return True
 
     def draw_funds(self, value: int):
         print(f'klient:{t()} wypłaca środki -- start; stan początkowy: {self.funds}')
